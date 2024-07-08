@@ -2,12 +2,11 @@
 using SystemForm.ModeloInterface;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using SystemForm.Infra;
 using System;
 
-namespace SystemForm.Infra.Data.Sql.Repository
+namespace SystemForm.Infra.Data.Sql.Repository//DAL
 {
-    public class RepositorioFuncionario : RepositorioBase, ICadastroFuncionario
+    public class RepositorioFuncionario : RepositorioBaseConexaoDados, ICadastroFuncionario
     {
         public Funcionario ObterPeloId(int Id)
         {
@@ -18,7 +17,7 @@ namespace SystemForm.Infra.Data.Sql.Repository
                     SELECT 
                         Id 
                     FROM 
-                        dbo.crud_db 
+                        dbo.TREINAMENTO
                     WHERE 
                         Id = @Id
                 ";
@@ -29,25 +28,31 @@ namespace SystemForm.Infra.Data.Sql.Repository
                 connection.Open();
                 var dataReader = command.ExecuteReader();
 
-                //if para uma linha while quando consulta retorna mais de uma linha
-                // como esta buscando por Id e o ID é unico então só existira uma linha
-
+                Funcionario funcionario = null;
                 if (dataReader.Read())
                 {
                     int.TryParse(dataReader["Id"].ToString(), out int id);
+                    decimal.TryParse(dataReader["Salario"].ToString(), out decimal salario);
+                    DateTime.TryParse(dataReader["DataCadastro"].ToString(), out DateTime dataCadastro);
+                    DateTime.TryParse(dataReader["DataAtualizacao"].ToString(), out DateTime dataAtualizacao);
 
-                    return new Funcionario()
+
+                    funcionario = new Funcionario()
                     {
                         Id = id,
+                        Nome = dataReader["Nome"].ToString(),
+                        Email = dataReader["Email"].ToString(),
+                        Salario = salario,
+                        Sexo = dataReader["Sexo"].ToString(),
+                        TipoContrato = dataReader["TipoContrato"].ToString(),
+                        DataCadastro = dataCadastro,
+                        DataAtualizacao = dataAtualizacao,
                     };
-
                 }
-
-
-                return null;
+                connection.Close();
+                return funcionario;
             }
         }
-
         public IEnumerable<Funcionario> ObterTodos()
         {
             using (var connection = new SqlConnection(connectionString))
@@ -62,8 +67,9 @@ namespace SystemForm.Infra.Data.Sql.Repository
                           ,[TipoContrato]
                           ,[DataCadastro]
                           ,[DataAtualizacao]
-                      FROM [crud_db].[dbo].[Funcionario]
+                      FROM [Funcionario]
                 ";
+
 
                 var command = new SqlCommand(consulta, connection);
 
@@ -78,7 +84,7 @@ namespace SystemForm.Infra.Data.Sql.Repository
                     decimal.TryParse(dataReader["Salario"].ToString(), out decimal salario);
                     DateTime.TryParse(dataReader["DataCadastro"].ToString(), out DateTime dataCadastro);
                     DateTime.TryParse(dataReader["DataAtualizacao"].ToString(), out DateTime dataAtualizacao);
-                    
+
 
                     var funcionario = new Funcionario()
                     {
@@ -99,6 +105,101 @@ namespace SystemForm.Infra.Data.Sql.Repository
                 return funcionarios;
             }
         }
+        public bool Inserir(Funcionario funcionario)
+        {
+            using (var connection = new SqlConnection(connectionString))
+            {//Mudar a consulta para add insert into
+                string comandoInserir =
 
+                 $@"
+                    INSERT INTO [Funcionario]
+                          (
+                                  Nome
+                                 ,Email
+                                 ,Salario
+                                 ,Sexo
+                                 ,TipoContrato
+                                 ,DataCadastro
+                             
+                           )
+                    VALUES
+                           (
+                                 @Nome,
+                                 @Email,
+                                 @Salario,
+                                 @Sexo,
+                                 @TipoContrato,
+                                 @DataCadastro
+
+                           )
+               
+                ";
+
+                var command = new SqlCommand(comandoInserir, connection);
+
+                command.Parameters.AddWithValue("@Nome", funcionario.Nome);
+                command.Parameters.AddWithValue("@Email", funcionario.Email);
+                command.Parameters.AddWithValue("@Salario", funcionario.Salario);
+                command.Parameters.AddWithValue("@Sexo", funcionario.Sexo);
+                command.Parameters.AddWithValue("@TipoContrato", funcionario.TipoContrato);
+                command.Parameters.AddWithValue("@DataCadastro", DateTime.UtcNow);
+
+                connection.Open();
+
+                int resultado = command.ExecuteNonQuery();
+
+                connection.Close();
+
+                return resultado > 0;
+
+
+            }
+        }
+
+        public bool Excluir(Funcionario funcionario)
+        {
+            using (var connection = new SqlConnection(connectionString))
+            {//Mudar a consulta para deletar dado
+                string comandoDeletar =
+
+                 $@"
+                    DELETE FROM Funcionario
+                         
+                    WHERE 
+                        Id = @Id               
+                ";
+
+                var command = new SqlCommand(comandoDeletar, connection);
+                command.Parameters.AddWithValue("@Id", Id);
+
+                connection.Open();
+                var dataReader = command.ExecuteReader();
+
+                //Funcionario funcionario = null;
+                //if (dataReader.Read())
+                //{
+                //    int.TryParse(dataReader["Id"].ToString(), out int id);
+                //    decimal.TryParse(dataReader["Salario"].ToString(), out decimal salario);
+                //    DateTime.TryParse(dataReader["DataCadastro"].ToString(), out DateTime dataCadastro);
+                //    DateTime.TryParse(dataReader["DataAtualizacao"].ToString(), out DateTime dataAtualizacao);
+
+
+                //    funcionario = new Funcionario()
+                //    {
+                //        Id = id,
+                //        Nome = dataReader["Nome"].ToString(),
+                //        Email = dataReader["Email"].ToString(),
+                //        Salario = salario,
+                //        Sexo = dataReader["Sexo"].ToString(),
+                //        TipoContrato = dataReader["TipoContrato"].ToString(),
+                //        DataCadastro = dataCadastro,
+                //        DataAtualizacao = dataAtualizacao,
+                //    };
+                //}
+                //connection.Close();
+                //return funcionario;
+            }
+
+        }
     }
 }

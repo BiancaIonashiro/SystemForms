@@ -170,6 +170,7 @@
             // txtNome
             // 
             this.txtNome.Location = new System.Drawing.Point(28, 50);
+            this.txtNome.MaxLength = 50;
             this.txtNome.Name = "txtNome";
             this.txtNome.Size = new System.Drawing.Size(370, 22);
             this.txtNome.TabIndex = 13;
@@ -177,6 +178,7 @@
             // txtEmail
             // 
             this.txtEmail.Location = new System.Drawing.Point(28, 148);
+            this.txtEmail.MaxLength = 50;
             this.txtEmail.Name = "txtEmail";
             this.txtEmail.Size = new System.Drawing.Size(370, 22);
             this.txtEmail.TabIndex = 14;
@@ -184,6 +186,7 @@
             // txtSalario
             // 
             this.txtSalario.Location = new System.Drawing.Point(28, 241);
+            this.txtSalario.MaxLength = 12;
             this.txtSalario.Name = "txtSalario";
             this.txtSalario.Size = new System.Drawing.Size(150, 22);
             this.txtSalario.TabIndex = 15;

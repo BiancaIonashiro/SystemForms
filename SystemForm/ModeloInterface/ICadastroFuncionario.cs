@@ -7,6 +7,8 @@ namespace SystemForm.ModeloInterface
     {
         Funcionario ObterPeloId(int Id);
         IEnumerable<Funcionario> ObterTodos();
+        bool Inserir(Funcionario funcionario);        
+        bool Excluir(Funcionario funcionario);        
     }
 }
 

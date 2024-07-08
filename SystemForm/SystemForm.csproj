@@ -62,26 +62,38 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FuncionarioDataAcess.cs">
+    <Compile Include="Forms\CadastroFuncionario.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FuncionarioDataAcess.Designer.cs">
-      <DependentUpon>FuncionarioDataAcess.cs</DependentUpon>
+    <Compile Include="Forms\CadastroFuncionario.Designer.cs">
+      <DependentUpon>CadastroFuncionario.cs</DependentUpon>
     </Compile>
-    <Compile Include="Infra\RepositorioBase.cs" />
+    <Compile Include="Entidades\Usuario.cs" />
+    <Compile Include="Forms\FrmLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FrmLogin.Designer.cs">
+      <DependentUpon>FrmLogin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Infra\RepositorioBaseConexaoDados.cs" />
     <Compile Include="Infra\RepositorioFuncionario.cs" />
+    <Compile Include="Infra\RepositorioUsuario.cs" />
     <Compile Include="ModeloInterface\ICadastroFuncionario.cs" />
-    <Compile Include="TelaPrincipal.cs">
+    <Compile Include="ModeloInterface\IRepositorioUsuario.cs" />
+    <Compile Include="Forms\TelaPrincipal.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="TelaPrincipal.Designer.cs">
+    <Compile Include="Forms\TelaPrincipal.Designer.cs">
       <DependentUpon>TelaPrincipal.cs</DependentUpon>
     </Compile>
     <Compile Include="Entidades\Funcionario.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="FuncionarioDataAcess.resx">
-      <DependentUpon>FuncionarioDataAcess.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\CadastroFuncionario.resx">
+      <DependentUpon>CadastroFuncionario.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FrmLogin.resx">
+      <DependentUpon>FrmLogin.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -91,10 +103,16 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="TelaPrincipal.resx">
+    <EmbeddedResource Include="Forms\TelaPrincipal.resx">
       <DependentUpon>TelaPrincipal.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include=".vs\slnx.sqlite" />
+    <None Include=".vs\SystemForm.csproj.dtbcache.json" />
+    <None Include=".vs\SystemForm\FileContentIndex\4aa35658-4dcc-4abd-b1d9-f63750f6231f.vsidx" />
+    <None Include=".vs\VSWorkspaceState.json" />
+    <None Include="bin\Debug\SystemForm.exe.config" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -108,6 +126,27 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\icons8-editar-50.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="bin\Debug\Microsoft.Bcl.AsyncInterfaces.dll" />
+    <Content Include="bin\Debug\Microsoft.Bcl.AsyncInterfaces.xml" />
+    <Content Include="bin\Debug\Microsoft.Extensions.DependencyInjection.Abstractions.dll" />
+    <Content Include="bin\Debug\Microsoft.Extensions.DependencyInjection.Abstractions.xml" />
+    <Content Include="bin\Debug\Microsoft.Extensions.DependencyInjection.dll" />
+    <Content Include="bin\Debug\Microsoft.Extensions.DependencyInjection.xml" />
+    <Content Include="bin\Debug\System.Runtime.CompilerServices.Unsafe.dll" />
+    <Content Include="bin\Debug\System.Runtime.CompilerServices.Unsafe.xml" />
+    <Content Include="bin\Debug\System.Threading.Tasks.Extensions.dll" />
+    <Content Include="bin\Debug\System.Threading.Tasks.Extensions.xml" />
+    <Content Include="bin\Debug\SystemForm.exe" />
+    <Content Include="bin\Debug\SystemForm.pdb" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include=".vs\SystemForm\v17\" />
+    <Folder Include="bin\Release\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

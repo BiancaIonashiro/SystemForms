@@ -1,8 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using SystemForm.Infra.Data.Sql.Repository;
 using SystemForm.ModeloInterface;
@@ -25,7 +22,7 @@ namespace SystemForm
             ConfigureServices(services);
             ServiceProvider = services.BuildServiceProvider();
 
-            var loginForm = ServiceProvider.GetRequiredService<TelaPrincipal>();
+            var loginForm = ServiceProvider.GetRequiredService<FrmLogin>();
             Application.Run(loginForm);
         }
 
@@ -34,7 +31,9 @@ namespace SystemForm
             //Registrar a connectionString
             //services.AddSingleton(sqlSettings);
             services.AddTransient<ICadastroFuncionario, RepositorioFuncionario>();
-            services.AddTransient<TelaPrincipal>();
+            services.AddTransient<IRepositorioUsuario, RepositorioUsuario>();
+            services.AddTransient<FrmLogin>();
+            services.AddTransient<frmTelaPrincipal>();
             services.AddTransient<CadastroFuncionario>();
         }
     }
